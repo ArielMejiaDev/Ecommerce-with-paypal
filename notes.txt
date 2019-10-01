@@ -1,0 +1,11 @@
+1. Crear Proyecto                                                                           YA
+2. Crear migraciones y modelo para el producto y crear seeders de productos y usuario       YA
+3. Importar Cart composer require bumbummen99/shoppingcart                                  YA
+4. Importar PayPayl sdk composer require paypal/rest-api-sdk-php                            YA
+5. Importar clase PayPalService y PayPalServiceChecker                                      YA
+6. Crear controladores para el home con productos, checkout y para la pagina de status      YA
+7. Crear rutas para las paginas home, checkout y status                                     YA
+8. Listar productos en home                                                                 YA
+9. Listar productos en el checkout                                                                                                               
+10. Usar clases creadas para conectarse a paypal 
+
