@@ -9,3 +9,14 @@
 9. Listar productos en el checkout                                                                                                               
 10. Usar clases creadas para conectarse a paypal 
 
+TODOS:
+
+1. Revisar funcionalidad general que la clase paypalService no sea una clase acoplada.
+    Que sea configurable las rutas de confirmed y cancel ACTUALMENTE DEPENDEN DE LA RUTA status 
+    // LO QUE PODRIA HACER ES QUE SE ENVIE COMO METODO O SE SETEE COMO PROPIEDAD LAS RUTAS 
+2. Crear Dashboard de backend para agregar:
+    - Tax
+    - Cupones 
+    - Promociones 
+    - Ordenes de envio 
+    - Invoices 
