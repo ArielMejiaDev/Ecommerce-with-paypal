@@ -43,7 +43,10 @@
                         <!-- Authentication Links -->
                         <li class="nav-item dropdown">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart">
-                                <i class="fas fa-shopping-cart"></i>
+                                <i class="fas fa-shopping-cart"></i> 
+                                @empty(Cart::content())
+                                    @else {{ Cart::count() == 0 ? '' : Cart::count() }}
+                                @endempty
                             </button>
                         </li>
                         @guest
@@ -80,7 +83,30 @@
         </nav>
 
         @if (Session::has('status'))
-            <p>{{ Session::get('status') }}</p>
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('status') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+
+        @if (Session::has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('success') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+
+        @if (Session::has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ Session::get('error') }}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         @endif
 
     <!-- Modal -->
@@ -111,7 +137,7 @@
                             <td>{{ $cartItem->name }}</td>
                             <td>{{ $cartItem->qty }}</td>
                             <td>{{ $cartItem->price }} USD</td>
-                            <td>{{ $cartItem->total() }} USD</td>
+                            <td>{{ $cartItem->subtotal() }} USD</td>
                         </tr>                        
                     @empty
                         <tr>

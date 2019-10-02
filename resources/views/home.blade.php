@@ -13,7 +13,7 @@
                     alt="" 
                     class="img-fluid rounded"
                 >
-                <p class="text-secondary my-2">25.00 USD</p>
+                <p class="text-secondary my-2">{{ $product->price }} USD</p>
                 <form action="{{ route('checkout.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id" value="{{ $product->id }}">

@@ -15,7 +15,6 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 use URL;
-use Session;
 
 
 class PayPalService
@@ -57,21 +56,13 @@ class PayPalService
     {
         $this->payer = new Payer();
         $this->payer->setPaymentMethod('paypal');
-        # We get all the items from the cart and parse the array into the Item object
-        $items = [];
-
-        foreach (Cart::content() as $item) {
-            $items[] = (new Item())
-                ->setName($item->name)
-                ->setCurrency('USD')
-                ->setQuantity($item->qty)
-                ->setPrice($item->price);
-        }
 
         $this->itemList = new ItemList();
         $this->itemList->setItems($items);
+
         $this->setIrrelevantAspectsForPayment();
         $this->addAmount($total, $currency);
+        
         return $this;
     }
 
@@ -125,7 +116,7 @@ class PayPalService
             }
         }
         
-        Session::put('paypalPaymentId', $this->payment->getId());
+        session(['paypalPaymentId' => $this->payment->getId()]);
 
         return $this->redirectToGateway($redirectURL);
     }

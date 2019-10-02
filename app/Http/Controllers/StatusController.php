@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PayPalServiceChecker;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
@@ -13,7 +15,13 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+        $checker = new PayPalServiceChecker;
+        if ($checker->isApproved()) {
+            Cart::destroy();
+            return redirect()->route('home')->with('success', 'Payment successfully!');
+        }
+        return redirect()->route('home')->with('error', 'The payment fail, please try again later');
+        
     }
 
     /**

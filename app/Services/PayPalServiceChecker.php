@@ -1,39 +1,64 @@
 <?php namespace App\Services;
 
-use Illuminate\Support\Facades\Session;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
+use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Rest\ApiContext;
 
 class PayPalServiceChecker 
 {
-    public $total_transaction;
-    public $currency_transaction;
-    public $payer_email;
-    public $payer_id;
-    public $payer_country_code;
-    public $payment_id;
+    private $apiContext;
+    public  $result;
+    public  $total_transaction;
+    public  $currency_transaction;
+    public  $payer;
+    public  $payment_id;
+    public  $approvedAction;
+    public  $failAction;
 
-    public function checkTransactionStatus()
+    public function __construct()
     {
-        $paymentId = Session::get('paypalPaymentId');
-        Session::forget('paypalPaymentId');
+        $this->apiContext = new ApiContext(new OAuthTokenCredential(config('paypal.client_id'),config('paypal.secret')));
+        $this->apiContext->setConfig(config('paypal.settings'));
+    }
+
+    public function approved($action)
+    {
+        $this->approvedAction = $action;
+    }
+
+    public function fail($action)
+    {
+        $this->approvedFail = $action;
+    }
+
+    public function isApproved()
+    {
+        $paymentId = session('paypalPaymentId');
+        session()->forget('paypalPaymentId');
+        // Session::forget('paypalPaymentId');
+
+        if (empty(request()->get('PayerID')) || empty(request()->get('token'))) {
+            //return redirect()->route('home')->with('error', 'There was a problem processing your payment. Please contact support.');
+            return false;
+        }
+        
         $payment = Payment::get($paymentId, $this->apiContext);
         $execution = new PaymentExecution();
         $execution->setPayerId(request()->get('PayerID'));
+        $this->result = $payment->execute($execution, $this->apiContext);
 
-        $result = $payment->execute($execution, $this->apiContext);
+        $this->setCheckerProperties();
 
+        return $this->result->getState() == 'approved';
+    }
 
-        $this->total_transaction = $result->transactions[0]->getAmount()->getTotal();
-        $this->currency_transaction = $result->transactions[0]->getAmount()->getCurrency();
-        $this->payer_email = $result->getPayer()->getPayerInfo()->getEmail();
-        $this->payer_id = $result->getPayer()->getPayerInfo()->getPayerId();
-        $this->payer_country_code = $result->getPayer()->getPayerInfo()->getCountryCode();
-        $this->payment_id = $result->getId();
-
-
-        return $result->getState() == 'approved';
-
+    private function setCheckerProperties()
+    {
+        $this->total_transaction = $this->result->transactions[0]->getAmount()->getTotal();
+        $this->currency_transaction = $this->result->transactions[0]->getAmount()->getCurrency();
+        $this->payer = $this->result->getPayer();
+        $this->payment_id = $this->result->getId();
     }
 
 }

@@ -21,12 +21,12 @@ class CheckoutController extends Controller
         $payment = new PayPalService;
         $payment->redirectSuccessAction = redirect()->route('home')->with('status', 'Thanks for your payment!');
         $payment->redirectFailAction = redirect()->route('home')->with('status', 'Whoops your payment cannot be process please try again later...');
-        $items = Cart::content()->each(function($cartItem){
+
+        $items = Cart::content()->map(function($cartItem){
             return (new Item())->setName($cartItem->name)->setCurrency('USD')->setQuantity($cartItem->qty)->setPrice($cartItem->price);
         })->toArray();
-        //return $payment->addItems($items, Cart::total(), 'USD')->pay();
+
         return $payment->addItems($items, Cart::total(), 'USD')->pay();
-        //return '...pagina de la orden para elegir el tipo de pago';
     }
 
     /**
