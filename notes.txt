@@ -19,6 +19,14 @@ TODOS:
 
 2. Crear ruta y vista para el checkout donde se listara los productos mas el tax y se mostrara las opciones de pago  y crear la interface el contrato para las clases "service" para 
 las pasarelas de pago
+
+3. Crear checkout form 
+    - Dinamico debe cambiar segun la data ingresada en el admin panel 
+    - Falta agregarle direccion de factura y direccion de envio ver ejemplos para ver cuantos inputs agregar al form 
+    - Tipo de pago debe ser dinamico segun opciones que el usuario habilite se mostraran las opciones de pago (Cuando seleccione el metodo se agregara un input hidden)
+    asi se sabra que clase PaymentGatewayService se usara. (se puede usar el helper str de laravel y usar el metodo camelcase para que dinamicamente cambie la clase)
+    - agregar seccion de cupones cuando exitan ya sea con codigo o promociones donde al seleccionar el producto automaticamente descuente el precio y solo ponga una fila de descuento por cupon 
+    o un badge en el producto. 
     
 3. Crear Dashboard de backend para agregar:
     - Tax
@@ -26,3 +34,5 @@ las pasarelas de pago
     - Promociones 
     - Ordenes de envio 
     - Invoices 
+    - Metodos de pago 
+    - Empresa (modulo para branding)

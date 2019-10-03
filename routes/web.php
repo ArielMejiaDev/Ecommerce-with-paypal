@@ -21,6 +21,6 @@ Auth::routes();
 
 Route::resource('cart', 'CartController');
 
-//Route::resource('checkout', 'CheckoutController');
+Route::resource('checkout', 'CheckoutController');
 
 Route::get('/status', 'StatusController@index')->name('status');

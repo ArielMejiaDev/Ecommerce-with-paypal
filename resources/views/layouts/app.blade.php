@@ -159,7 +159,7 @@
                 </form>
                 @empty (Cart::count())
                     @else 
-                    <a href="{{ route('cart.index') }}" class="btn btn-primary">Checkout</a>
+                    <a href="{{ route('checkout.index') }}" class="btn btn-primary">Checkout</a>
                 @endempty
             </div>
         </div>
