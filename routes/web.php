@@ -19,10 +19,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::resource('checkout', 'CheckoutController');
+Route::resource('cart', 'CartController');
+
+//Route::resource('checkout', 'CheckoutController');
 
 Route::get('/status', 'StatusController@index')->name('status');
-
-// Route::get('status', function () {
-//     return redirect()->route('home')->with('status', 'successful payment');
-// })->name('status');

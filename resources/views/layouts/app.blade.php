@@ -154,12 +154,12 @@
 
         </div>
             <div class="modal-footer">
-                <form method="POST" action="{{ route('checkout.destroy', 1) }}"> @csrf @method('DELETE') 
+                <form method="POST" action="{{ route('cart.destroy', 1) }}"> @csrf @method('DELETE') 
                     <button type="submit" class="btn btn-danger" >Empty</button>
                 </form>
                 @empty (Cart::count())
                     @else 
-                    <a href="{{ route('checkout.index') }}" class="btn btn-primary">Checkout</a>
+                    <a href="{{ route('cart.index') }}" class="btn btn-primary">Checkout</a>
                 @endempty
             </div>
         </div>

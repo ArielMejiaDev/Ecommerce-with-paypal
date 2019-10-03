@@ -9,12 +9,7 @@ class PayPalServiceChecker
 {
     private $apiContext;
     public  $result;
-    public  $total_transaction;
-    public  $currency_transaction;
-    public  $payer;
-    public  $payment_id;
-    public  $approvedAction;
-    public  $failAction;
+    public  $transactionInfo;
 
     public function __construct()
     {
@@ -22,24 +17,12 @@ class PayPalServiceChecker
         $this->apiContext->setConfig(config('paypal.settings'));
     }
 
-    public function approved($action)
-    {
-        $this->approvedAction = $action;
-    }
-
-    public function fail($action)
-    {
-        $this->approvedFail = $action;
-    }
-
     public function isApproved()
     {
         $paymentId = session('paypalPaymentId');
         session()->forget('paypalPaymentId');
-        // Session::forget('paypalPaymentId');
 
         if (empty(request()->get('PayerID')) || empty(request()->get('token'))) {
-            //return redirect()->route('home')->with('error', 'There was a problem processing your payment. Please contact support.');
             return false;
         }
         
@@ -55,10 +38,10 @@ class PayPalServiceChecker
 
     private function setCheckerProperties()
     {
-        $this->total_transaction = $this->result->transactions[0]->getAmount()->getTotal();
-        $this->currency_transaction = $this->result->transactions[0]->getAmount()->getCurrency();
-        $this->payer = $this->result->getPayer();
-        $this->payment_id = $this->result->getId();
+        $this->transactionInfo = [
+            'transactionInfo'   => $this->result->transactions[0],
+            'payerInfo'         => $this->result->getPayer()
+        ];
     }
 
 }

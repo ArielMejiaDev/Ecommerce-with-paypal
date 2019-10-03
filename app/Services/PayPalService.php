@@ -31,8 +31,8 @@ class PayPalService
     private $redirectURLs;
     private $payment;
 
-    public $redirectSuccessAction;
-    public $redirectFailAction;
+    public $errorMessage = 'Whoops your payment cannot be process please try again later...';
+    public $redirectUrl;
 
 
     public function __construct()
@@ -91,7 +91,7 @@ class PayPalService
     public function setUrls()
     {
         $this->redirectURLs = new RedirectUrls();
-        $this->redirectURLs->setReturnUrl(URL::to('status'))->setCancelUrl(URL::to('status'));
+        $this->redirectURLs->setReturnUrl($this->redirectUrl)->setCancelUrl($this->redirectUrl);
     }
 
     public function setPayment()
@@ -124,10 +124,10 @@ class PayPalService
     public function redirectToGateway($redirectURL)
     {
         if (isset($redirectURL)) {
-            return redirect()->to($redirectURL);//este helper no se modifica ya que es el que arma la url a la que se va dirijir la app
+            return redirect()->to($redirectURL);
         }
 
-        return $this->redirectFailAction;
+        return back()->with('error', $this->errorMessage);
 
     }
 

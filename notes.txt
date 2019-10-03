@@ -11,9 +11,12 @@
 
 TODOS:
 
+0. Cambiar las rutas del checkout que tengo ahorita a cart ya que realmente es el cart al que estoy enviando            YA
+
 1. Revisar funcionalidad general que la clase paypalService no sea una clase acoplada.
     Que sea configurable las rutas de confirmed y cancel ACTUALMENTE DEPENDEN DE LA RUTA status 
     // LO QUE PODRIA HACER ES QUE SE ENVIE COMO METODO O SE SETEE COMO PROPIEDAD LAS RUTAS 
+    
 2. Crear Dashboard de backend para agregar:
     - Tax
     - Cupones 
