@@ -1,11 +1,12 @@
 <?php namespace App\Services;
 
+use App\Services\Interfaces\PaymentGatewayServiceChecker;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 
-class PayPalServiceChecker 
+class PayPalServiceChecker implements PaymentGatewayServiceChecker
 {
     private $apiContext;
     public  $result;

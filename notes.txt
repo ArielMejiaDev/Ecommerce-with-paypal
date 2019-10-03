@@ -16,8 +16,11 @@ TODOS:
 1. Revisar funcionalidad general que la clase paypalService no sea una clase acoplada.
     Que sea configurable las rutas de confirmed y cancel ACTUALMENTE DEPENDEN DE LA RUTA status 
     // LO QUE PODRIA HACER ES QUE SE ENVIE COMO METODO O SE SETEE COMO PROPIEDAD LAS RUTAS 
+
+2. Crear ruta y vista para el checkout donde se listara los productos mas el tax y se mostrara las opciones de pago  y crear la interface el contrato para las clases "service" para 
+las pasarelas de pago
     
-2. Crear Dashboard de backend para agregar:
+3. Crear Dashboard de backend para agregar:
     - Tax
     - Cupones 
     - Promociones 

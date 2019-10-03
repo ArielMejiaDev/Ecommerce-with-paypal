@@ -1,23 +1,12 @@
 <?php namespace App\Services;
 
-use App\Product;
+use App\Services\Interfaces\PaymentGatewayServiceInterface;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Payer;
-use PayPal\Api\ItemList;
-use PayPal\Api\InputFields;
-use PayPal\Api\WebProfile;
-use PayPal\Api\Amount;
-use PayPal\Api\Item;
-use PayPal\Api\Transaction;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
-use URL;
+use PayPal\Api\{Payer, ItemList, InputFields, WebProfile, Amount, Transaction, RedirectUrls, Payment};
 
-
-class PayPalService
+class PayPalService implements PaymentGatewayServiceInterface
 {
 
     private $apiContext;
