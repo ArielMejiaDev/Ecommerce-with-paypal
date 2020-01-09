@@ -9,9 +9,10 @@
             <div class="bg-white py-2 px-2 rounded shadow">
                 <h3>{{ $product->name }}</h3>
                 <img 
-                    src="https://images.unsplash.com/photo-1564584217132-2271feaeb3c5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" 
+                    src="{{ $product->image }}" 
                     alt="" 
                     class="img-fluid rounded"
+                    style="height: 250px; width:auto"
                 >
                 <p class="text-secondary my-2">{{ $product->price }} USD</p>
                 <form action="{{ route('cart.store') }}" method="POST">
