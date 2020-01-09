@@ -70,6 +70,19 @@ DB_DATABASE=herokudatabasenamegenerated
 DB_USERNAME=herokuusernamegenerated
 DB_PASSWORD=herokupasswordgenerated
 ```
+### Add Paypal ID and Secret
+
+(create your account on paypal sandbox)[https://developer.paypal.com]
+(get id and secret)[https://developer.paypal.com/developer/applications/]
+
+Add this values to "env" file
+
+```env
+PAYPAL_CLIENT_ID='yourId'
+PAYPAL_SECRET='yourSecret'
+PAYPAL_MODE=sandbox
+```
+
 All database keys are required to connect correctly with heroku database plugin, 
 but the APP_URL key is required because Passport endpoint "oauth/token" redirects to base url.
 
