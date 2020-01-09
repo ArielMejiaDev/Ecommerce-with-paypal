@@ -56,6 +56,10 @@ heroku config:set APP_KEY=
 ```
 * all env file settings can be added on Heroku app/settings section.
 
+### Add the postgreSQL Heroku add-on
+
+(Link to Heroku add on installation)[https://dashboard.heroku.com/apps/ecommerce-paypal-gateway/resources]
+
 To add a database is required a heroku plugin for data, it can be found 
 in this link: (Heroku data section)[https://data.heroku.com], you can select a free or pay plan, and heroku provides a aws database.
 then you need to match the database and the app, it can be handle in Heroku GUI, 
