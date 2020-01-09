@@ -1,72 +1,119 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# 💻 Ecommerce with paypal
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Laravel project with Ecommerce site with the next features:
 
-## About Laravel
+- Products
+- Shopping Cart
+- Checkout (Demo)
+- Paypal Gateway
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Getting Started 🎬
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```
+git clone https://github.com/ArielMejiaDev/Ecommerce-with-paypal shop
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Prerequisites 🔍
 
-## Learning Laravel
+    - PHP 7.2 
+    - Server ready for Laravel environment recommended: [Valet](https://medium.com/ariel-mejia-dev/install-laravel-valet-on-mac-6e5229cba1e)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Installing ⚙️
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+cd api
+composer install 
+cp .env.example .env 
+php artisan key:generate
+nano .env //edit your file as you want
+```
 
-## Laravel Sponsors
+## Running the tests 🧪
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The project goes with test to all endpoints.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
+- List all products
+- Add products to shopping cart
+- Remove all products from shopping cart
+- Correct data between checkout and selected products
+- Paypal payment successfull
+- Paypal payment fail with notification
 
-## Contributing
+- reviews
+```
+vendor/bin/phpunit
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### And coding style 💻
 
-## Security Vulnerabilities
+It is written using PSR-4 and PSR-12 standard.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Deployment 🚀
+```
+echo "web: vendor/bin/heroku-php-apache2 public/" > Procfile
+heroku create apiname
+heroku config:set APP_KEY=
+```
+* all env file settings can be added on Heroku app/settings section.
+
+To add a database is required a heroku plugin for data, it can be found 
+in this link: (Heroku data section)[https://data.heroku.com], you can select a free or pay plan, and heroku provides a aws database.
+then you need to match the database and the app, it can be handle in Heroku GUI, 
+and then add some environment variables to heroku app 
+
+```env
+APP_URL=herokuurl
+DB_CONNECTION=pgsql
+DB_HOST=herokugenerated
+DB_PORT=5432
+DB_DATABASE=herokudatabasenamegenerated
+DB_USERNAME=herokuusernamegenerated
+DB_PASSWORD=herokupasswordgenerated
+```
+All database keys are required to connect correctly with heroku database plugin, 
+but the APP_URL key is required because Passport endpoint "oauth/token" redirects to base url.
+
+finally we are going to change the composer.json file to reflect Heroku deployment needs
+
+```json
+    //in scripts object add
+    "post-install-cmd": [ 
+        "php artisan clear-compiled",
+        "chmod -R 777 storage", 
+        "php artisan passport:keys"
+    ]
+    //copy from require-dev object the faker version of your project to required object
+    "fzaninotto/faker": "^1.4"
+```
+
+update composer to get changes and add the changes to Heroku
+
+```php
+composer update
+```
+
+```bash
+git add .
+git commit -m "wip"
+git push heroku master
+```
+
+## Built With 🛠️
+
+* [Laravel](https://github.com/laravel/laravel) - The web framework used
+* [Composer](https://getcomposer.org/) - Dependency Management
+* [Passport](https://laravel.com/docs/6.x/passport) - Passport
+* [Postgres](https://www.postgresql.org/) - Postgres
+* [Heroku](https://devcenter.heroku.com/articles/getting-started-with-laravel) - Heroku
+
+## Versioning 🔢
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors 🧔
+
+* **Ariel Mejia Dev** - [ArielMejiaDev](https://github.com/ArielMejiaDev)
 
 ## License
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
