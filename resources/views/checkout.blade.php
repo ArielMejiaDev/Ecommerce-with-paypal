@@ -6,25 +6,25 @@
     <div class="py-5 text-center">
       <img class="d-block mx-auto mb-4" src="{{ asset('images/logo.png') }}" alt="" width="72" height="72">
       <h2>Checkout</h2>
-      <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      <p class="lead">This part of the app is a demo do not add any credentials to the checkout just submit the form to test the paypal payment.</p>
     </div>
   
     <div class="row">
 
        @include('checkout.products')
   
-        <form class="card p-2">
+        {{-- <form class="card p-2">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Promo code">
             <div class="input-group-append">
               <button type="submit" class="btn btn-secondary">Redeem</button>
             </div>
           </div>
-        </form>
+        </form> --}}
       </div>
       <div class="col-md-8 order-md-1">
         <h4 class="mb-3">Billing address</h4>
-        <form class="needs-validation" novalidate="">
+        <form class="needs-validation" novalidate="" >
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">First name</label>
@@ -38,19 +38,6 @@
               <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
               <div class="invalid-feedback">
                 Valid last name is required.
-              </div>
-            </div>
-          </div>
-  
-          <div class="mb-3">
-            <label for="username">Username</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">@</span>
-              </div>
-              <input type="text" class="form-control" id="username" placeholder="Username" required="">
-              <div class="invalid-feedback" style="width: 100%;">
-                Your username is required.
               </div>
             </div>
           </div>
@@ -120,7 +107,7 @@
   
           <div class="d-block my-3">
             <div class="custom-control custom-radio">
-              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" required="">
               <label class="custom-control-label" for="credit">Credit card</label>
             </div>
             <div class="custom-control custom-radio">
@@ -128,7 +115,7 @@
               <label class="custom-control-label" for="debit">Debit card</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
+              <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
               <label class="custom-control-label" for="paypal">PayPal</label>
             </div>
           </div>
@@ -166,13 +153,13 @@
             </div>
           </div>
           <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+          <a class="btn btn-primary btn-lg btn-block" type="submit" href="{{ route('cart.index') }}">Continue to checkout</a>
         </form>
       </div>
     </div>
   
     <footer class="my-5 pt-5 text-muted text-center text-small">
-      <p class="mb-1">© 2017-2019 Company Name</p>
+      <p class="mb-1">© {{ date('Y') }} {{  config('app.name', 'Shopi')   }}</p>
       <ul class="list-inline">
         <li class="list-inline-item"><a href="#">Privacy</a></li>
         <li class="list-inline-item"><a href="#">Terms</a></li>
