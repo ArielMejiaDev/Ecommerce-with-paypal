@@ -1,15 +1,19 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-use App\Http\Requests\ProductRequest;
-use App\Product;
+namespace App\Http\Controllers;
+
+use App\Http\Requests\PaymentRequest;
+use App\Mail\PayDetail;
+use App\Mail\PayDetailMail;
+use App\Services\PayPalService;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use PayPal\Api\Item;
-use App\Services\PayPalService;
 
-class CartController extends Controller
+class PaymentController extends Controller
 {
-   /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,12 +39,20 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(PaymentRequest $request)
     {
-        $product = Product::find($request->id);
-        Cart::setGlobalTax(12);
-        Cart::add($product->id, $product->name, 1, $product->price);
-        return redirect()->route('home');
+        session(['buyer' => [
+            'firstName' => $request->firstName,
+            'lastName'  => $request->lastName,
+            'email'     => $request->email,
+        ]]);
+        $payment = new PayPalService;
+        $payment->redirectUrl = route('status');
+        $items = Cart::content()->map(function($cartItem){
+            return (new Item())->setName($cartItem->name)->setCurrency('USD')->setQuantity($cartItem->qty)->setPrice($cartItem->price);
+        })->toArray();
+
+        return $payment->addItems($items, Cart::total(), 'USD')->pay();
     }
 
     /**
@@ -51,7 +63,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-        //ddd($id);
+        //
     }
 
     /**
@@ -85,7 +97,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        Cart::destroy();
-        return redirect()->route('home');
+        //
     }
 }

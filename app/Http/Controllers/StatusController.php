@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PayDetailMail;
 use App\Services\PayPalServiceChecker;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class StatusController extends Controller
 {
@@ -17,7 +19,9 @@ class StatusController extends Controller
     {
         $checker = new PayPalServiceChecker;
         if ($checker->isApproved()) {
+            Mail::to(session('buyer')['email'])->send(new PayDetailMail(session('buyer')));
             Cart::destroy();
+            session()->forget('buyer');
             return redirect()->route('home')->with('success', 'Payment successfully!');
         }
         return redirect()->route('home')->with('error', 'The payment fail, please try again later');

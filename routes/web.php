@@ -23,4 +23,6 @@ Route::resource('cart', 'CartController');
 
 Route::resource('checkout', 'CheckoutController');
 
+Route::post('pay', 'PaymentController@store')->name('pay');
+
 Route::get('/status', 'StatusController@index')->name('status');
